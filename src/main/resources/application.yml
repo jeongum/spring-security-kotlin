@@ -1,0 +1,22 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/security
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+
+jwt:
+  secret: secreatealksejSekcjlskIDjs3923KDjflejlskdfndknfksdf
+  expiration-minutes: 30
+  refresh-expiration-days: 14

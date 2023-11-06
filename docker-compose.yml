@@ -1,0 +1,13 @@
+services:
+  mariadb:
+    container_name: "mariadb"
+    image: docker.io/bitnami/mariadb:10.6
+    ports:
+      - 3306:3306
+    volumes:
+      - "./mariadb/conf.d:/etc/mysql/conf.d"
+      - "./mariadb/data:/var/lib/mysql"
+    environment:
+      MARIADB_DATABASE: security
+      MARIADB_ROOT_PASSWORD: root
+    restart: always
