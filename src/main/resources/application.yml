@@ -17,6 +17,5 @@ spring:
         dialect: org.hibernate.dialect.MariaDBDialect
 
 jwt:
-  secret: secreatealksejSekcjlskIDjs3923KDjflejlskdfndknfksdf
+  secret: mySecretKeyOf32OrMoreCharactersConsistingOfAlphabetsAndNumbers
   expiration-minutes: 30
-  refresh-expiration-days: 14

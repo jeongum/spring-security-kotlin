@@ -1,4 +1,4 @@
-package com.jeongum.springsecurity.security
+package com.jeongum.springsecurity.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
