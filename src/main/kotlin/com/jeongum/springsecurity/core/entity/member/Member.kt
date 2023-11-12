@@ -1,5 +1,6 @@
 package com.jeongum.springsecurity.core.entity.member
 
+import com.jeongum.springsecurity.api.controller.dto.MemberInfoResponse
 import jakarta.persistence.*
 import java.time.LocalDateTime
 import java.util.*
@@ -23,4 +24,9 @@ class Member(
 ) {
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "member")
     val memberRole: MemberRole? = null
+
+    fun toInfoDto() = MemberInfoResponse(
+        email,
+        name
+    )
 }
