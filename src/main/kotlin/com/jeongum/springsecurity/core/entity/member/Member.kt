@@ -1,4 +1,4 @@
-package com.jeongum.springsecurity.core.entity
+package com.jeongum.springsecurity.core.entity.member
 
 import jakarta.persistence.*
 import java.time.LocalDateTime

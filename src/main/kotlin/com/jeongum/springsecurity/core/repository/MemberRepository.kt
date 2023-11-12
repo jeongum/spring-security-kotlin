@@ -1,7 +1,7 @@
 package com.jeongum.springsecurity.core.repository
 
-import com.jeongum.springsecurity.core.entity.Member
-import com.jeongum.springsecurity.core.entity.MemberRole
+import com.jeongum.springsecurity.core.entity.member.Member
+import com.jeongum.springsecurity.core.entity.member.MemberRole
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 

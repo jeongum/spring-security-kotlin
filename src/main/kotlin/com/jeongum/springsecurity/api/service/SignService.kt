@@ -1,8 +1,8 @@
 package com.jeongum.springsecurity.api.service
 
 import com.jeongum.springsecurity.api.controller.dto.SingUpRequest
-import com.jeongum.springsecurity.core.entity.Member
-import com.jeongum.springsecurity.core.entity.MemberRole
+import com.jeongum.springsecurity.core.entity.member.Member
+import com.jeongum.springsecurity.core.entity.member.MemberRole
 import com.jeongum.springsecurity.core.repository.MemberRepository
 import com.jeongum.springsecurity.core.repository.MemberRoleRepository
 import org.springframework.security.crypto.password.PasswordEncoder
