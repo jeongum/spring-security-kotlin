@@ -2,6 +2,7 @@ package com.jeongum.springsecurity.filter
 
 import com.jeongum.springsecurity.jwt.TokenInfo
 import com.jeongum.springsecurity.jwt.TokenProvider
+import io.jsonwebtoken.ExpiredJwtException
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -23,13 +24,26 @@ class JwtAuthenticationFilter(
     ) {
         resolveToken(request, TokenInfo.TokenType.ACCESS_TOKEN.value)?.let { token ->
             handleAuthServlet(request, response) {
-                (tokenProvider.getAuthentication(token) to token)
+                try {
+                    (tokenProvider.getAuthentication(token) to token)
+                } catch (e: ExpiredJwtException) {
+                    val prevAccessToken = resolveToken(request, TokenInfo.TokenType.ACCESS_TOKEN.value) ?: throw e
+                    val refreshToken = resolveToken(request, TokenInfo.TokenType.REFRESH_TOKEN.value) ?: throw e
+
+                    reissueAccessToken(prevAccessToken, refreshToken)
+                }
             }
         }
 
         filterChain.doFilter(request, response)
     }
 
+    private fun reissueAccessToken(prevAccessToken: String, refreshToken: String): Pair<Authentication, String> {
+        val authentication = tokenProvider.validateRefreshToken(prevAccessToken, refreshToken)
+        val newAccessToken = tokenProvider.createAccessToken(authentication)
+
+        return (authentication to newAccessToken)
+    }
     private fun resolveToken(request: HttpServletRequest, headerName: String): String? {
         val bearerToken = request.getHeader(headerName)
         return if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(TokenInfo.TokenGrantType.BEARER.value)) {
