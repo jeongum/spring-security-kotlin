@@ -47,7 +47,8 @@ class SignService(
         val authentication = authenticationManagerBuilder.`object`.authenticate(authenticationToken)
 
         val accessToken = tokenProvider.createAccessToken(authentication)
+        val refreshToken = tokenProvider.createRefreshToken(authentication) // 추가
 
-        return TokenInfo(accessToken = accessToken)
+        return TokenInfo(accessToken = accessToken, refreshToken = refreshToken)
     }
 }
