@@ -10,21 +10,21 @@ import java.util.*
 class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    val id: UUID? = null,
+    val id: UUID? = null,    // 앱 내에서 사용되는 사용자의 고유키
 
-    @Column(nullable = false, unique = true)
-    val email: String,
+    @Column(nullable = false, unique = true)    // 중복을 허용하지 않음
+    val email: String,        // 로그인 시 사용되는 사용자의 email
 
     @Column(nullable = false)
     val password: String,
 
-    val name: String,
+    val name: String,    // 앱 내에서 사용되는 사용자의 닉네임
+
+    @Enumerated(value = EnumType.STRING)
+    val type: MemberType = MemberType.MEMBER,    // 사용자의 타입 (Member, Admin..)
 
     val createdAt: LocalDateTime = LocalDateTime.now()
 ) {
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "member")
-    val memberRole: MemberRole? = null
-
     fun toInfoDto() = MemberInfoResponse(
         email,
         name

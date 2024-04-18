@@ -22,6 +22,6 @@ class CustomUserDetailsService(
             member.id!!,
             member.email,
             member.password,
-            listOf(SimpleGrantedAuthority("ROLE_${member.memberRole!!.role}"))
+            listOf(SimpleGrantedAuthority("ROLE_${member.type}"))
         )
 }

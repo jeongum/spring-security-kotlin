@@ -11,6 +11,7 @@ import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
@@ -98,16 +99,14 @@ class TokenProvider(
         return getAuthentication(claims)
     }
 
-
-
     // Claim 추출
     private fun getClaimsWithValidation(token: String): Claims =
         Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).body
 
     // Claim 내, Token 정보 추출
     private fun getAuthentication(claims: Claims): Authentication {
-        val auth = claims["auth"] ?: throw RuntimeException("권한 정보가 없습니다.")
-        val userId = claims["userId"] ?: throw RuntimeException("권한 정보가 없습니다.")
+        val auth = claims["auth"] ?: throw AuthenticationCredentialsNotFoundException("권한 정보가 없습니다.")
+        val userId = claims["userId"] ?: throw AuthenticationCredentialsNotFoundException("권한 정보가 없습니다.")
 
         val authorities: Collection<GrantedAuthority> = (auth as String).split(",").map { SimpleGrantedAuthority(it) }
 
