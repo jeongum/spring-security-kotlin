@@ -11,16 +11,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
-class SignService(
+class OnAppAuthService(
     private val memberRepository: MemberRepository,
     private val passwordEncoder: PasswordEncoder,
     private val authenticationManagerBuilder: AuthenticationManagerBuilder,
     private val tokenProvider: TokenProvider
 ) {
-    @Transactional
     fun signUp(singUpRequest: SingUpRequest): String {
         memberRepository.findByEmail(singUpRequest.email)?.let {
             throw DuplicateKeyException("Already Exists")
@@ -36,7 +34,6 @@ class SignService(
         return "Success"
     }
 
-    @Transactional
     fun signIn(signInRequest: SignInRequest): TokenInfo {
         val authenticationToken = UsernamePasswordAuthenticationToken(signInRequest.email, signInRequest.password)
         val authentication = authenticationManagerBuilder.`object`.authenticate(authenticationToken)
