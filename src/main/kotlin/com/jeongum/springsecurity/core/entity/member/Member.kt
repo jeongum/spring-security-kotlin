@@ -1,6 +1,8 @@
 package com.jeongum.springsecurity.core.entity.member
 
 import com.jeongum.springsecurity.api.controller.dto.MemberInfoResponse
+import com.jeongum.springsecurity.api.model.auth.MemberType
+import com.jeongum.springsecurity.api.model.auth.SocialType
 import jakarta.persistence.*
 import java.time.LocalDateTime
 import java.util.*
@@ -22,6 +24,9 @@ class Member(
 
     @Enumerated(value = EnumType.STRING)
     val type: MemberType = MemberType.MEMBER,    // 사용자의 타입 (Member, Admin..)
+
+    @Enumerated(value = EnumType.STRING)
+    val socialType: SocialType? = null,
 
     val createdAt: LocalDateTime = LocalDateTime.now()
 ) {
